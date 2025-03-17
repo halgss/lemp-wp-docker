@@ -1,0 +1,22 @@
+# Fix problem repositore    
+    sed -i -e "s|mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*
+    sed -i -e "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*
+    dnf clean all
+    dnf swap centos-linux-repos centos-stream-repos -y
+    # Create user new
+    adduser halgs
+    # Install firewall
+    dnf install firewalld -y  
+    systemctl start firewalld 
+    firewall-cmd --permanent --list-all
+    firewall-cmd --get-services
+    firewall-cmd --permanent --add-service=http
+    firewall-cmd --reload
+    # Install Nginx
+    dnf install nginx -y      
+    # Install soport PHP 
+    dnf install php-fpm php-mysqlnd -y
+    # Configure php for nginx
+    #sed -i -e "s|apache|nginx|g" /etc/php-fpm.d/www.conf
+    php-fpm
+    nginx
